@@ -1,3 +1,5 @@
+import { PatientsModule } from './../patients/patients.module';
+import { TestResultsModule } from './../test-results/test-results.module';
 import { MaterialModule } from './../shared/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +21,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component'
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    MaterialModule
+    MaterialModule,
+    TestResultsModule,
+    PatientsModule
   ]
 })
 export class DashboardModule { }
