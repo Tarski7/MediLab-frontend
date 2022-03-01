@@ -1,3 +1,4 @@
+import { TestResultService } from './../../services/test-result.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestResultListingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private testResultService: TestResultService) { }
 
   ngOnInit(): void {
+    this.testResultService.getTestResults().subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.error(err);
+    });
   }
 
 }
