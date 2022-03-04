@@ -3,21 +3,25 @@ import { TestResultListingComponent } from './components/test-result-listing/tes
 import { MaterialModule } from './../shared/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TestResultFormComponent } from './components/test-result-form/test-result-form.component';
 
 @NgModule({
   declarations: [
-    TestResultListingComponent
+    TestResultListingComponent,
+    TestResultFormComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
-    TestResultListingComponent
+    TestResultListingComponent,
+    TestResultFormComponent
   ],
   providers: [
     TestResultService
