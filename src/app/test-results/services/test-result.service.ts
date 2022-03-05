@@ -15,4 +15,8 @@ export class TestResultService {
   getTestResults(): Observable<TestResult[]> {
     return this.httpClient.get<TestResult[]>(`${BASE_URL}/test-results`);
   }
+
+  createTestResult(body: TestResult): Observable<TestResult> {
+    return this.httpClient.post<TestResult>(`${BASE_URL}/test-results`, body);
+  }
 }

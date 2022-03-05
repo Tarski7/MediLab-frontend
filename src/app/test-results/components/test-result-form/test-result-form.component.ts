@@ -1,5 +1,6 @@
+import { TestResultService } from './../../services/test-result.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-test-result-form',
@@ -10,7 +11,8 @@ export class TestResultFormComponent implements OnInit {
 
   testResultForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+    private testResultService: TestResultService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -18,10 +20,19 @@ export class TestResultFormComponent implements OnInit {
 
   createForm() {
     this.testResultForm = this.fb.group({
-      name: '',
-      date: '',
-      price: '',
+      name: ['', Validators.required],
+      date: ['', Validators.required],
+      price: ['', Validators.required],
       description: ''
     });
+  }
+
+  onSubmit() {
+    this.testResultService.createTestResult(this.testResultForm.value)
+      .subscribe(data => {
+        this.testResultForm.reset();
+      }, err => {
+        console.error(err);
+      });
   }
 }

@@ -1,20 +1,27 @@
 <mat-card>
-  {{this.testResultForm.value | json}}
-  <form class="form-container" [formGroup]="testResultForm">
-    <mat-form-field>
+  <h3>Create test result</h3>
+  <form class="form-container" [formGroup]="testResultForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-form-field color="accent">
       <input matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="testResultForm.controls.name.invalid && testResultForm.controls.name.touched">Name is required</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field color="accent">
       <mat-label>Date</mat-label>
       <input matInput [matDatepicker]="date" formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
       <mat-datepicker #date></mat-datepicker>
+      <mat-error *ngIf="testResultForm.controls.date.invalid && testResultForm.controls.date.touched">Date is required</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field color="accent">
       <input matInput placeholder="Price" type="number" formControlName="price">
+      <mat-error *ngIf="testResultForm.controls.price.invalid && testResultForm.controls.price.touched">Price is required</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field color="accent">
       <input matInput placeholder="Description" formControlName="description">
     </mat-form-field>
+    <div>
+      <button mat-raised-button [disabled]="!testResultForm.valid" type="submit" color="accent">Save</button>
+      <button mat-raised-button type="reset">Cancel</button>
+    </div>
   </form>
 </mat-card>
