@@ -19,4 +19,12 @@ export class TestResultService {
   createTestResult(body: TestResult): Observable<TestResult> {
     return this.httpClient.post<TestResult>(`${BASE_URL}/test-results`, body);
   }
+
+  deleteTestResult(id: string): Observable<TestResult> {
+    return this.httpClient.delete<TestResult>(`${BASE_URL}/test-results/${id}`);
+  }
+
+  getTestResult(id: string): Observable<TestResult> {
+    return this.httpClient.get<TestResult>(`${BASE_URL}/test-results/${id}`);
+  }
 }

@@ -19,6 +19,10 @@ const routes: Routes = [
         component: TestResultFormComponent
       },
       {
+        path: 'test-results/:id',
+        component: TestResultFormComponent
+      },
+      {
         path: 'patients',
         component: PatientListingComponent
       },
