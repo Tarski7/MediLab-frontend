@@ -27,4 +27,8 @@ export class TestResultService {
   getTestResult(id: string): Observable<TestResult> {
     return this.httpClient.get<TestResult>(`${BASE_URL}/test-results/${id}`);
   }
+
+  updateTestResult(id: string, body: TestResult): Observable<TestResult> {
+    return this.httpClient.put<TestResult>(`${BASE_URL}/test-results/${id}`, body);
+  }
 }

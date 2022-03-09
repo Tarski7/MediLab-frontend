@@ -36,13 +36,24 @@ export class TestResultFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.testResultService.createTestResult(this.testResultForm.value)
-      .subscribe(data => {
-        this.snackBar.open('Test result created', 'Success', {
-          duration: 2000
-        });
-        this.router.navigate(['dashboard', 'test-results']);
-      }, err => this.errorHandler(err, 'Failed to create test result'));
+    if (this.testResult) {
+      this.testResultService.updateTestResult(this.testResult._id, this.testResultForm.value)
+        .subscribe(data => {
+          this.snackBar.open('Test result updated', 'Success', {
+            duration: 2000
+          });
+          this.router.navigate(['dashboard', 'test-results']);
+        }, err => this.errorHandler(err, 'Failed to update test result'));
+    }
+    else {
+      this.testResultService.createTestResult(this.testResultForm.value)
+        .subscribe(data => {
+          this.snackBar.open('Test result created', 'Success', {
+            duration: 2000
+          });
+          this.router.navigate(['dashboard', 'test-results']);
+        }, err => this.errorHandler(err, 'Failed to create test result'));
+    }
   }
 
   private setTestResultToForm() {
