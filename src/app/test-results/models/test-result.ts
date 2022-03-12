@@ -5,3 +5,11 @@ export class TestResult {
   price: number;
   description: string;
 }
+
+export class TestResultPaginationRsp {
+  docs: TestResult[];
+  total: number;
+  pages: number;
+  page: number;
+  limit: number;
+}

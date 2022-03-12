@@ -1,9 +1,10 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TestResult } from './../../models/test-result';
 import { TestResultService } from './../../services/test-result.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-test-results-listing',
@@ -18,10 +19,30 @@ export class TestResultListingComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'date', 'price', 'description', 'action'];
   dataSource: TestResult[] = [];
+  resultsLength = 0;
+  _page = 0;
+  _perPage = 10;
 
   ngOnInit(): void {
-    this.testResultService.getTestResults().subscribe(data => {
-      this.dataSource = data;
+    this.populateTestResults();
+  }
+
+  onPageChanged(event: PageEvent) {
+    this._page = event.pageIndex;
+    this._perPage = event.pageSize;
+    this.testResultService.getTestResults({
+        page: ++event.pageIndex,
+        perPage: event.pageSize})
+        .subscribe(data => {
+          this.dataSource = data.docs;
+          this.resultsLength = data.total;
+        }, err => this.errorHandler(err, 'Failed to fetch test results'));
+  }
+
+  private populateTestResults() {
+    this.testResultService.getTestResults({page: 1, perPage: 10}).subscribe(data => {
+      this.dataSource = data.docs;
+      this.resultsLength = data.total;
     }, err => this.errorHandler(err, 'Failed to fetch test results'));
   }
 
