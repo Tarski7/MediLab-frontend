@@ -22,12 +22,14 @@ export class TestResultListingComponent implements OnInit {
   resultsLength = 0;
   _page = 0;
   _perPage = 10;
+  isResultsLoading = false;
 
   ngOnInit(): void {
     this.populateTestResults();
   }
 
   onPageChanged(event: PageEvent) {
+    this.isResultsLoading = true;
     this._page = event.pageIndex;
     this._perPage = event.pageSize;
     this.testResultService.getTestResults({
@@ -36,14 +38,18 @@ export class TestResultListingComponent implements OnInit {
         .subscribe(data => {
           this.dataSource = data.docs;
           this.resultsLength = data.total;
+          this.isResultsLoading = false;
         }, err => this.errorHandler(err, 'Failed to fetch test results'));
   }
 
   private populateTestResults() {
+    this.isResultsLoading = true;
     this.testResultService.getTestResults({page: 1, perPage: 10}).subscribe(data => {
       this.dataSource = data.docs;
       this.resultsLength = data.total;
-    }, err => this.errorHandler(err, 'Failed to fetch test results'));
+    }, err => this.errorHandler(err, 'Failed to fetch test results'), () => {
+      this.isResultsLoading = false;
+    });
   }
 
   saveBtnHandler() {
@@ -67,6 +73,7 @@ export class TestResultListingComponent implements OnInit {
   }
 
   private errorHandler(error, message) {
+    this.isResultsLoading = false;
     console.error(error);
     this.snackBar.open(message, 'Error', {
       duration: 2000
