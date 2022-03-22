@@ -12,8 +12,16 @@ export class TestResultService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getTestResults({page, perPage}): Observable<TestResultPaginationRsp> {
-    return this.httpClient.get<TestResultPaginationRsp>(`${BASE_URL}/test-results?page=${page}&perPage=${perPage}`);
+  getTestResults({page, perPage, sortField, sortDir, filter}): Observable<TestResultPaginationRsp> {
+    let queryString = `${BASE_URL}/test-results?page=${page}&perPage=${perPage}`;
+    if (sortField && sortDir) {
+      queryString = `${queryString}&sortField=${sortField}&sortDir=${sortDir}`;
+    }
+    if (filter) {
+      queryString = `${queryString}&filter=${filter}`;
+    }
+
+    return this.httpClient.get<TestResultPaginationRsp>(queryString);
   }
 
   createTestResult(body: TestResult): Observable<TestResult> {
