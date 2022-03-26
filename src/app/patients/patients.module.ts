@@ -1,3 +1,5 @@
+import { PatientService } from './services/patient.service';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './../shared/material.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -13,10 +15,14 @@ import { PatientListingComponent } from './components/patient-listing/patient-li
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   exports: [
     PatientListingComponent
+  ],
+  providers: [
+    PatientService
   ]
 })
 export class PatientsModule { }

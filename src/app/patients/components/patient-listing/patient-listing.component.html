@@ -1,4 +1,64 @@
-<mat-card>
-  <h1>Patient listing!</h1>
-</mat-card>
+<mat-toolbar>
+  <h2>Patients</h2>
+  <div class="menu-bar">
+      <button mat-button (click)="saveBtnHandler()">
+        New patient
+      </button>
+  </div>
+</mat-toolbar>
+<div class="table-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> First name </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> Last name </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef> Date of birth </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.dateOfBirth | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pesel">
+      <th mat-header-cell *matHeaderCellDef> Pesel </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.pesel}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phoneNo">
+      <th mat-header-cell *matHeaderCellDef> Phone no </th>
+      <td mat-cell *matCellDef="let patient"> {{patient.phoneNo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let patient">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="editBtnHandler(patient._id)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="deleteBtnHandler(patient._id)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
