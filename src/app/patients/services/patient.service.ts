@@ -10,9 +10,13 @@ const BASE_URL = 'http://localhost:3000/api';
 })
 export class PatientService {
 
-  constructor(private HttpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   getPatients(): Observable<Patient[]> {
-    return this.HttpClient.get<Patient[]>(`${BASE_URL}/patients`);
+    return this.httpClient.get<Patient[]>(`${BASE_URL}/patients`);
+  }
+
+  createPatient(body: Patient): Observable<Patient> {
+    return this.httpClient.post<Patient>(`${BASE_URL}/patients`, body);
   }
 }
