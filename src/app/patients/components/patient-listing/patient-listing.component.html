@@ -1,7 +1,7 @@
 <mat-toolbar>
   <h2>Patients</h2>
   <div class="menu-bar">
-      <button mat-button (click)="openDialog()">
+      <button mat-button (click)="openDialog('')">
         New patient
       </button>
   </div>
@@ -51,7 +51,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="editBtnHandler(patient._id)">
+          <button mat-menu-item (click)="openDialog(patient._id)">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
+import { remove } from 'lodash';
 
 @Component({
   selector: 'app-patient-listing',
@@ -30,30 +31,53 @@ export class PatientListingComponent implements OnInit {
     () => this.isResultLoading = false);
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PatientFormDialogComponent, {
+  openDialog(patientId: string): void {
+    const options = {
       width: '550px',
       height: '500px',
       data: {}
-    });
+    };
+
+    if (patientId) {
+      options.data = {patientId: patientId}
+    }
+
+    const dialogRef = this.dialog.open(PatientFormDialogComponent, options);
 
     dialogRef.afterClosed().pipe(filter(patientParam => typeof patientParam === 'object')).subscribe(result => {
-      return this.patientService.createPatient(result).subscribe(patient => {
-        this.dataSource.data.push(patient);
-        this.dataSource.data = [...this.dataSource.data];
-        this.snackBar.open('Patient created!', 'Success', {
-          duration: 2000
-        });
-      }, err => this.errorHandler(err, 'Failed to create patient'));
+      if (patientId) {
+        return this.patientService.updatePatient(patientId, result).subscribe(patient => {
+          const index = this.dataSource.data.findIndex(patient => patient._id === patientId);
+          this.dataSource.data[index] = patient;
+          this.dataSource.data = [...this.dataSource.data];
+          this.snackBar.open('Patient updated!', 'Success', {
+            duration: 2000
+          });
+        }, err => this.errorHandler(err, 'Failed to update patient'))
+      }
+      else {
+        return this.patientService.createPatient(result).subscribe(patient => {
+          this.dataSource.data.push(patient);
+          this.dataSource.data = [...this.dataSource.data];
+          this.snackBar.open('Patient created!', 'Success', {
+            duration: 2000
+          });
+        }, err => this.errorHandler(err, 'Failed to create patient'));
+      }
     });
-  }
-
-  editBtnHandler(patientId) {
-
   }
 
   deleteBtnHandler(patientId) {
+    this.patientService.deletePatient(patientId).subscribe(data => {
+      const removeItems = remove(this.dataSource.data, item => {
+        return item._id === data._id;
+      });
+      this.dataSource.data = [...this.dataSource.data];
 
+      this.snackBar.open('Patient deleted', 'Success', {
+        duration: 2000
+      });
+    }, err => this.errorHandler(err, 'Failed to delete patient'));
   }
 
   private errorHandler(error, message) {

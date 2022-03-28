@@ -1,3 +1,5 @@
+import { PatientService } from './../../../patients/services/patient.service';
+import { Patient } from './../../../patients/models/patient';
 import { TestResult } from './../../models/test-result';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestResultService } from './../../services/test-result.service';
@@ -14,16 +16,19 @@ export class TestResultFormComponent implements OnInit {
 
   testResultForm: FormGroup;
   private testResult: TestResult;
+  patients: Patient[] = [];
 
   constructor(private fb: FormBuilder,
     private testResultService: TestResultService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private patientService: PatientService) { }
 
   ngOnInit(): void {
     this.createForm();
     this.setTestResultToForm();
+    this.setPatients();
   }
 
   private createForm() {
@@ -31,6 +36,7 @@ export class TestResultFormComponent implements OnInit {
       name: ['', Validators.required],
       date: ['', Validators.required],
       price: ['', Validators.required],
+      patient: ['', Validators.required],
       description: ''
     });
   }
@@ -68,6 +74,12 @@ export class TestResultFormComponent implements OnInit {
         this.testResultForm.patchValue(this.testResult);
       }, err => this.errorHandler(err, 'Failed to get test result'));
     });
+  }
+
+  private setPatients() {
+    this.patientService.getPatients().subscribe(patients => {
+      this.patients = patients;
+    }, err => this.errorHandler(err, 'Failed to get patients'))
   }
 
   private errorHandler(error, message) {

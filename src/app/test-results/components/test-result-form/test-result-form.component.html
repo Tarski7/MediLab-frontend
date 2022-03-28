@@ -17,6 +17,15 @@
       <mat-error *ngIf="testResultForm.controls.price.invalid && testResultForm.controls.price.touched">Price is required</mat-error>
     </mat-form-field>
     <mat-form-field color="accent">
+      <mat-label>Select patient</mat-label>
+      <mat-select formControlName="patient">
+        <mat-option *ngFor="let p of patients" [value]="p._id">
+          {{p.firstName}} {{p.lastName}}
+        </mat-option>
+        <mat-error *ngIf="testResultForm.controls.patient.invalid && testResultForm.controls.patient.touched">Patient is required</mat-error>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field color="accent">
       <input matInput placeholder="Description" formControlName="description">
     </mat-form-field>
     <div>

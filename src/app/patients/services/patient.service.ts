@@ -19,4 +19,16 @@ export class PatientService {
   createPatient(body: Patient): Observable<Patient> {
     return this.httpClient.post<Patient>(`${BASE_URL}/patients`, body);
   }
+
+  getPatient(id: string): Observable<Patient> {
+    return this.httpClient.get<Patient>(`${BASE_URL}/patients/${id}`);
+  }
+
+  updatePatient(id: string, body: Patient): Observable<Patient> {
+    return this.httpClient.put<Patient>(`${BASE_URL}/patients/${id}`, body);
+  }
+
+  deletePatient(id: string): Observable<Patient> {
+    return this.httpClient.delete<Patient>(`${BASE_URL}/patients/${id}`);
+  }
 }
