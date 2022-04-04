@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class AuthComponent implements OnInit {
 
   authForm: FormGroup;
+  title = '';
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -20,6 +21,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.title = this.router.url === '/login' ? 'Login' : 'Signup';
   }
 
   private initForm() {
@@ -30,9 +32,14 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.login(this.authForm.value).subscribe(data => {
-      this.jwtService.setToken(data.token);
-      this.router.navigate(['/dashboard', '/test-results']);
-    }, err => console.error(err));
+    if (this.title === 'Signup') {
+      console.log('Signup');
+    }
+    else {
+      this.authService.login(this.authForm.value).subscribe(data => {
+        this.jwtService.setToken(data.token);
+        this.router.navigate(['/dashboard', '/test-results']);
+      }, err => console.error(err));
+    }
   }
 }

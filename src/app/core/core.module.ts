@@ -1,3 +1,4 @@
+import { TokenInterceptorService } from './services/token-interceptor.service';
 import { JwtService } from './services/jwt.service';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,7 +15,8 @@ import { CommonModule } from '@angular/common';
   ],
   providers: [
     AuthService,
-    JwtService
+    JwtService,
+    TokenInterceptorService
   ]
 })
 export class CoreModule { }
