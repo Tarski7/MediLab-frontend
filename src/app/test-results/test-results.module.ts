@@ -1,3 +1,4 @@
+import { EditTestResultResolverService } from './services/edit-test-result-resolver.service';
 import { TestResultService } from './services/test-result.service';
 import { TestResultListingComponent } from './components/test-result-listing/test-result-listing.component';
 import { MaterialModule } from './../shared/material.module';
@@ -24,7 +25,8 @@ import { TestResultFormComponent } from './components/test-result-form/test-resu
     TestResultFormComponent
   ],
   providers: [
-    TestResultService
+    TestResultService,
+    EditTestResultResolverService
   ]
 })
 export class TestResultsModule { }

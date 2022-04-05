@@ -27,7 +27,7 @@ export class PatientListingComponent implements OnInit {
     this.isResultLoading = true;
     this.patientService.getPatients().subscribe(data => {
       this.dataSource.data = data;
-    }, err => console.log(err),
+    }, err => this.errorHandler(err, 'Ooops, something went wrong'),
     () => this.isResultLoading = false);
   }
 

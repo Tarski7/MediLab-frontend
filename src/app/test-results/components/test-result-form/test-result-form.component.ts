@@ -17,6 +17,7 @@ export class TestResultFormComponent implements OnInit {
   testResultForm: FormGroup;
   private testResult: TestResult;
   patients: Patient[] = [];
+  title = 'New test result';
 
   constructor(private fb: FormBuilder,
     private testResultService: TestResultService,
@@ -69,10 +70,11 @@ export class TestResultFormComponent implements OnInit {
         return;
       }
 
-      this.testResultService.getTestResult(id).subscribe(testResult => {
-        this.testResult = testResult;
+      this.title = 'Edit test result';
+      this.route.data.subscribe((data: {testResult: TestResult}) => {
+        this.testResult = data.testResult;
         this.testResultForm.patchValue(this.testResult);
-      }, err => this.errorHandler(err, 'Failed to get test result'));
+      })
     });
   }
 

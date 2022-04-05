@@ -1,5 +1,5 @@
 <mat-card>
-  <h3>Create test result</h3>
+  <h3>{{title}}</h3>
   <form class="form-container" [formGroup]="testResultForm" novalidate (ngSubmit)="onSubmit()">
     <mat-form-field color="accent">
       <input matInput placeholder="Name" formControlName="name">

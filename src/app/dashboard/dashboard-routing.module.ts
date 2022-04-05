@@ -1,3 +1,5 @@
+import { EditTestResultResolverService } from './../test-results/services/edit-test-result-resolver.service';
+import { AuthGuardService } from './../core/services/auth-guard.service';
 import { TestResultFormComponent } from './../test-results/components/test-result-form/test-result-form.component';
 import { PatientListingComponent } from './../patients/components/patient-listing/patient-listing.component';
 import { TestResultListingComponent } from './../test-results/components/test-result-listing/test-result-listing.component';
@@ -9,26 +11,35 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'test-results',
-        component: TestResultListingComponent
+        component: TestResultListingComponent,
+        canActivateChild: [AuthGuardService]
       },
       {
         path: 'test-results/new',
-        component: TestResultFormComponent
+        component: TestResultFormComponent,
+        canActivateChild: [AuthGuardService]
       },
       {
         path: 'test-results/:id',
-        component: TestResultFormComponent
+        component: TestResultFormComponent,
+        canActivateChild: [AuthGuardService],
+        resolve: {
+          testResult: EditTestResultResolverService
+        }
       },
       {
         path: 'patients',
-        component: PatientListingComponent
+        component: PatientListingComponent,
+        canActivateChild: [AuthGuardService]
       },
       {
         path: '**',
-        redirectTo: 'test-results'
+        redirectTo: 'test-results',
+        canActivateChild: [AuthGuardService]
       }
     ]
   }

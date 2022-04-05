@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { JwtService } from './../core/services/jwt.service';
 import { AuthService } from './../core/services/auth.service';
@@ -13,11 +14,13 @@ export class AuthComponent implements OnInit {
 
   authForm: FormGroup;
   title = '';
+  isResultsLoading = false;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private jwtService: JwtService,
-    private router: Router) { }
+    private router: Router,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -33,13 +36,35 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     if (this.title === 'Signup') {
-      console.log('Signup');
+      this.signup();
     }
     else {
-      this.authService.login(this.authForm.value).subscribe(data => {
-        this.jwtService.setToken(data.token);
-        this.router.navigate(['/dashboard', '/test-results']);
-      }, err => console.error(err));
+      this.login();
     }
+  }
+
+  private signup() {
+    this.isResultsLoading = true;
+    this.authService.signup(this.authForm.value).subscribe(data => {
+      this.router.navigate(['/dashboard', '/test-results']);
+    }, err => this.errorHandler(err, 'Ooops, something went wrong'),
+    () => this.isResultsLoading = false);
+  }
+
+  private login() {
+    this.isResultsLoading = true;
+    this.authService.login(this.authForm.value).subscribe(data => {
+      this.jwtService.setToken(data.token);
+      this.router.navigate(['/dashboard', '/test-results']);
+    }, err => this.errorHandler(err, 'Ooops, something went wrong'),
+    () => this.isResultsLoading = false);
+  }
+
+  private errorHandler(error, message) {
+    this.isResultsLoading = false;
+    console.error(error);
+    this.snackBar.open(message, 'Error', {
+      duration: 2000
+    });
   }
 }
