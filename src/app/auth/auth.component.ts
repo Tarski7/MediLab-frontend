@@ -60,12 +60,6 @@ export class AuthComponent implements OnInit {
     () => this.isResultsLoading = false);
   }
 
-  googleAuthHandler() {
-    this.authService.googleAuth().subscribe(data => {
-      console.log(data);
-    }, err => this.errorHandler(err, 'Ooops, something went wrong'));
-  }
-
   private errorHandler(error, message) {
     this.isResultsLoading = false;
     console.error(error);

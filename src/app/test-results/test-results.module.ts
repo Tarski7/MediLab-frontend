@@ -5,7 +5,6 @@ import { MaterialModule } from './../shared/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { TestResultFormComponent } from './components/test-result-form/test-result-form.component';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { TestResultFormComponent } from './components/test-result-form/test-resu
     CommonModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule,
     ReactiveFormsModule
   ],
   exports: [

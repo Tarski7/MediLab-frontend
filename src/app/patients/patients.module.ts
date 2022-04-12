@@ -1,6 +1,5 @@
 import { PatientFormDialogComponent } from './components/patient-form-dialog/patient-form-dialog.component';
 import { PatientService } from './services/patient.service';
-import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -16,7 +15,6 @@ import { PatientListingComponent } from './components/patient-listing/patient-li
     CommonModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule,
     ReactiveFormsModule
   ],
   exports: [
