@@ -1,3 +1,4 @@
+import { TestResultViewComponent } from './../test-results/components/test-result-view/test-result-view.component';
 import { EditTestResultResolverService } from './../test-results/services/edit-test-result-resolver.service';
 import { AuthGuardService } from './../core/services/auth-guard.service';
 import { TestResultFormComponent } from './../test-results/components/test-result-form/test-result-form.component';
@@ -22,6 +23,14 @@ const routes: Routes = [
         path: 'test-results/new',
         component: TestResultFormComponent,
         canActivateChild: [AuthGuardService]
+      },
+      {
+        path: 'test-results/:id/view',
+        component: TestResultViewComponent,
+        canActivateChild: [AuthGuardService],
+        resolve: {
+          testResult: EditTestResultResolverService
+        }
       },
       {
         path: 'test-results/:id',

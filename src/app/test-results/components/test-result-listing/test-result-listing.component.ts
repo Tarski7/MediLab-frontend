@@ -18,7 +18,7 @@ export class TestResultListingComponent implements OnInit, AfterViewInit {
     private router: Router,
     private snackBar: MatSnackBar) { }
 
-  displayedColumns: string[] = ['name', 'date', 'price', 'description', 'action'];
+  displayedColumns: string[] = ['name', 'date', 'price', 'action'];
   dataSource: TestResult[] = [];
   resultsLength = 0;
   _page = 0;
