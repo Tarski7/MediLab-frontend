@@ -1,1 +1,39 @@
-<p>test-result-view works!</p>
+<mat-card>
+  <mat-card-title>{{testResult.name}}</mat-card-title>
+  <mat-card-content>
+    <table>
+      <tr>
+        <td class="column-title">Date: </td>
+        <td>{{testResult.date}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Price: </td>
+        <td>{{testResult.price}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Description: </td>
+        <td>{{testResult.description}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Patient name: </td>
+        <td>{{testResult.patient.firstName}} {{testResult.patient.lastName}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Patient date of birth: </td>
+        <td>{{testResult.patient.dateOfBirth}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Patient PESEL: </td>
+        <td>{{testResult.patient.pesel}}</td>
+      </tr>
+      <tr>
+        <td class="column-title">Patient e-mail: </td>
+        <td>{{testResult.patient.email}}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button [routerLink]="['/dashboard', 'test-results', testResult._id]">Edit</button>
+    <button mat-button>Download</button>
+  </mat-card-actions>
+</mat-card>

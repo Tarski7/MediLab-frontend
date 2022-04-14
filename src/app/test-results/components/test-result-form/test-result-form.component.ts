@@ -73,7 +73,16 @@ export class TestResultFormComponent implements OnInit {
       this.title = 'Edit test result';
       this.route.data.subscribe((data: {testResult: TestResult}) => {
         this.testResult = data.testResult;
-        this.testResultForm.patchValue(this.testResult);
+
+        if (this.testResult.patient) {
+          this.testResultForm.patchValue({patient: this.testResult.patient._id});
+        }
+        this.testResultForm.patchValue({
+          name: this.testResult.name,
+          date: this.testResult.date,
+          price: this.testResult.price,
+          description: this.testResult.description,
+        });
       })
     });
   }
