@@ -39,4 +39,10 @@ export class TestResultService {
   updateTestResult(id: string, body: TestResult): Observable<TestResult> {
     return this.httpClient.put<TestResult>(`${BASE_URL}/test-results/${id}`, body);
   }
+
+  downloadTestResult(id: string) {
+    return this.httpClient.get(`${BASE_URL}/test-results/${id}/download`, {
+      responseType: 'blob'
+    });
+  }
 }

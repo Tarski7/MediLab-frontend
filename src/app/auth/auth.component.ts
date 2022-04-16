@@ -1,3 +1,4 @@
+import { User } from './../core/models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { JwtService } from './../core/services/jwt.service';
@@ -30,7 +31,8 @@ export class AuthComponent implements OnInit {
   private initForm() {
     this.authForm = this.fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      name: ''
     });
   }
 
@@ -46,14 +48,18 @@ export class AuthComponent implements OnInit {
   private signup() {
     this.isResultsLoading = true;
     this.authService.signup(this.authForm.value).subscribe(data => {
-      this.router.navigate(['/dashboard', '/test-results']);
+      this.snackBar.open('Signup successful', 'Success', {duration: 3000});
+      this.router.navigate(['/login']);
     }, err => this.errorHandler(err, 'Ooops, something went wrong'),
     () => this.isResultsLoading = false);
   }
 
   private login() {
     this.isResultsLoading = true;
-    this.authService.login(this.authForm.value).subscribe(data => {
+    let {email, password} = this.authForm.value;
+    let user: User = {email, password};
+
+    this.authService.login(user).subscribe(data => {
       this.jwtService.setToken(data.token);
       this.router.navigate(['/dashboard', '/test-results']);
     }, err => this.errorHandler(err, 'Ooops, something went wrong'),
