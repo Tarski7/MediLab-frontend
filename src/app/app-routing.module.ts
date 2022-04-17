@@ -1,3 +1,4 @@
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NoAuthGuardService } from './core/services/no-auth-guard.service';
 import { AuthComponent } from './auth/auth.component';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,10 @@ const routes: Routes = [
     path: 'signup',
     component: AuthComponent,
     canActivate: [NoAuthGuardService]
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   },
   {
     path : 'dashboard',
