@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from './../../core/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,8 @@ export class ForgotPasswordComponent implements OnInit {
   isResultsLoading = false;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -26,8 +28,21 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isResultsLoading = true;
     this.authService.forgotPassword(this.form.value).subscribe(data => {
-      console.log(data);
-    }, err => console.error(err));
+      this.snackBar.open(data.message, 'Success', {
+        duration: 3000
+      });
+    }, err => {
+      this.errorHandler(err, 'Ooops, something went wrong')
+    }, () => this.isResultsLoading = false);
+  }
+
+  private errorHandler(error, message) {
+    this.isResultsLoading = false;
+    console.error(error);
+    this.snackBar.open(message, 'Error', {
+      duration: 2000
+    });
   }
 }

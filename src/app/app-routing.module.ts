@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NoAuthGuardService } from './core/services/no-auth-guard.service';
 import { AuthComponent } from './auth/auth.component';
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent
   },
   {
     path : 'dashboard',
