@@ -25,8 +25,9 @@
         <mat-error *ngIf="testResultForm.controls.patient.invalid && testResultForm.controls.patient.touched">Patient is required</mat-error>
       </mat-select>
     </mat-form-field>
-    <mat-form-field color="accent">
-      <input matInput placeholder="Description" formControlName="description">
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
     </mat-form-field>
     <div>
       <button mat-raised-button [disabled]="!testResultForm.valid" type="submit" color="accent">Save</button>

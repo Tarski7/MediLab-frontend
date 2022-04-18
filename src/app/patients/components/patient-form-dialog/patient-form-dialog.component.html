@@ -19,6 +19,7 @@
         <mat-error *ngIf="patientForm.controls.dateOfBirth.invalid && patientForm.controls.dateOfBirth.touched">Date of birth is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" color="accent">
+        <mat-label>Pesel</mat-label>
         <input matInput placeholder="Pesel" type="number" formControlName="pesel">
         <mat-error *ngIf="patientForm.controls.pesel.invalid && patientForm.controls.pesel.touched">Pesel is required</mat-error>
       </mat-form-field>
@@ -28,6 +29,7 @@
         <mat-error *ngIf="patientForm.controls.email.invalid && patientForm.controls.email.touched">Email is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" color="accent">
+        <mat-label>Phone no</mat-label>
         <input matInput placeholder="Phone no" type="number" formControlName="phoneNo">
         <mat-error *ngIf="patientForm.controls.phoneNo.invalid && patientForm.controls.phoneNo.touched">Phone no is required</mat-error>
       </mat-form-field>
